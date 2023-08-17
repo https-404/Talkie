@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "589651569431",
+    "project_id": "talkie-58bf9",
+    "storage_bucket": "talkie-58bf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589651569431:android:9d058b2b93be3e56042552",
+        "android_client_info": {
+          "package_name": "com.example.talkie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589651569431-t41cqk3c5g7md158gcg4j8nj862qgnng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAolesyVXaQj6GwXv6wSXIWLn8bU15q9So"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589651569431-t41cqk3c5g7md158gcg4j8nj862qgnng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
