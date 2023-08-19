@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final ThemeData theme = ThemeData(
     colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: Colors.purple,
+      primarySwatch: Colors.blue,
       backgroundColor: Colors.white,
       accentColor: Colors.black,
-      errorColor: const Color(0xb00020),
+      errorColor: Colors.red[900],
       brightness: Brightness.light,
 
 

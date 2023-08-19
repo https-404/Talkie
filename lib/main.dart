@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talkie/res/theme/theme.dart';
+import 'package:talkie/view/login_view.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -13,6 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Talkie',
       theme: AppTheme.theme,
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(),
 
     );
   }
