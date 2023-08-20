@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:talkie/repository/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -16,6 +18,10 @@ class _LoginPageState extends State<LoginPage> {
    late double _deviceWidth;
    // varibale for _formdata class
    late GlobalKey<FormState> _formkey;
+   //variable for authentications
+    String? _email;
+    String? _password;
+
 
    //------------------------------------------------
    _LoginPageState() {
@@ -29,14 +35,18 @@ class _LoginPageState extends State<LoginPage> {
     
     
     return Scaffold(
+      
+      resizeToAvoidBottomInset: false,
       body: Align(
         alignment: Alignment.center,
-        child: _loginpageui(),
+        child: SingleChildScrollView(child: _loginpageui()),
       ),
     );
   }
 
   Widget _loginpageui() {
+     print(_email);
+     print(_password);
     return Container(
       //alignment settings
     //
@@ -51,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
         children: <Widget>[
           _headingPage(),
           _inputdata(),
+
           _loginbutton(),
           _registerbutton(),
         ],
@@ -87,10 +98,12 @@ class _LoginPageState extends State<LoginPage> {
   
   Widget _inputdata() {
     return Container(
-      height: _deviceHeight * 0.16,
+      height: _deviceHeight * 0.20,
       child: Form(
         key: _formkey,
-        onChanged: () {},
+        onChanged: () {
+          _formkey.currentState?.save();
+        },
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,8 +122,16 @@ class _LoginPageState extends State<LoginPage> {
      return TextFormField(
        autocorrect: false ,
        style: TextStyle(color: Theme.of(context).colorScheme.primary),
-       validator: (_input) {},
-       onSaved: (_input) {},
+       validator: (_input) {
+         return _input!.isNotEmpty && _input!.contains("@")
+             ? null
+             : "Please enter valid email";
+       },
+       onSaved: (_input) {
+         setState(() {
+           _email = _input!;
+         });
+       },
 
        cursorColor: Theme.of(context).colorScheme.primary,
        decoration: InputDecoration(
@@ -125,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
       borderRadius: BorderRadius.circular(0),
       borderSide: BorderSide(
       color: Colors.black12,
-      width: 2.0,
+      width: 1,
     ),
        ),
 
@@ -139,8 +160,17 @@ class _LoginPageState extends State<LoginPage> {
          autocorrect: false ,
          obscureText: true,
          style: TextStyle(color: Theme.of(context).colorScheme.primary),
-         validator: (_input) {},
-         onSaved: (_input) {},
+         validator: (_input) {
+           return _input!.isNotEmpty
+               ? null
+               : "Please enter password";
+
+         },
+         onSaved: (_input) {
+           setState(() {
+             _password = _input!;
+           });
+         },
 
          cursorColor: Theme.of(context).colorScheme.primary,
          decoration: InputDecoration(
@@ -155,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
              borderRadius: BorderRadius.circular(0),
              borderSide: BorderSide(
                color: Colors.black12,
-               width: 2.0,
+               width: 1.0,
              ),
            ),
 
@@ -165,14 +195,19 @@ class _LoginPageState extends State<LoginPage> {
 
    //------------ "LOGIN" Button
 
-  Widget _loginbutton()
-  {
+  Widget _loginbutton() {
     return Container(
+      
       height: _deviceHeight * 0.06,
       width: _deviceWidth,
 
       child: MaterialButton(
-        onPressed: () {} ,
+        onPressed: () {
+          if (_formkey.currentState!.validate())
+            {
+
+            }
+        } ,
         color: Theme.of(context).colorScheme.primary,
         child: Text("Login",
         style: TextStyle(
