@@ -29,6 +29,13 @@
             {
               "client_id": "589651569431-t41cqk3c5g7md158gcg4j8nj862qgnng.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "589651569431-rmnds8c8cbgsd77ab7m8agjm0lqdnefm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.talkie.RunnerTests"
+              }
             }
           ]
         }

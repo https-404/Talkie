@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkie/repository/auth_provider.dart';
+import 'package:talkie/services/snackbar_service.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -22,7 +23,8 @@ class _LoginPageState extends State<LoginPage> {
     String? _email;
     String? _password;
 
-
+    //AUTH PROVIDER
+   AuthProvider? _auth;
    //------------------------------------------------
    _LoginPageState() {
      _formkey= GlobalKey<FormState>();
@@ -32,40 +34,54 @@ class _LoginPageState extends State<LoginPage> {
     //using media query
     _deviceHeight= MediaQuery.of(context).size.height;
     _deviceWidth= MediaQuery.of(context).size.width;
-    
-    
+
+
+
     return Scaffold(
-      
+
       resizeToAvoidBottomInset: false,
       body: Align(
         alignment: Alignment.center,
-        child: SingleChildScrollView(child: _loginpageui()),
+        child: ChangeNotifierProvider<AuthProvider>.value(
+          value: AuthProvider.instance,
+        child: _loginpageui(),
+        )
+        
+        
       ),
     );
   }
 
   Widget _loginpageui() {
-     print(_email);
-     print(_password);
-    return Container(
-      //alignment settings
-    //
-      // color: Colors.red,
-      height: _deviceHeight * 0.60,
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.1),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _headingPage(),
-          _inputdata(),
+     //print(_email);
+     //print(_password);
+    return Builder(
+        builder: (BuildContext _context){
+          _auth = Provider.of<AuthProvider>(_context);
+          // assigning default context to build contetx of snackbar_service.dart
+          SnackbarService.instance.buildContext = _context;
+        //  print(_auth?.user);
+          return Container(
+            //alignment settings
+            //
+            // color: Colors.red,
+            height: _deviceHeight * 0.60,
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.1),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _headingPage(),
+                _inputdata(),
 
-          _loginbutton(),
-          _registerbutton(),
-        ],
-      ),
+                _loginbutton(),
+                _registerbutton(),
+              ],
+            ),
+          );
+        }
     );
   }
   // For Welcome Page and Login here Texts
@@ -196,7 +212,15 @@ class _LoginPageState extends State<LoginPage> {
    //------------ "LOGIN" Button
 
   Widget _loginbutton() {
-    return Container(
+    return
+      _auth?.status == AuthStatus.authenticating && _auth?.status != AuthStatus.error
+        ?
+      Align(
+        alignment: Alignment.center,
+        child: CircularProgressIndicator( ),
+      )
+        : //else
+      Container(
       
       height: _deviceHeight * 0.06,
       width: _deviceWidth,
@@ -205,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           if (_formkey.currentState!.validate())
             {
-
+              _auth?.loginUserwithEmailandPassword(_email!, _password!);
             }
         } ,
         color: Theme.of(context).colorScheme.primary,
