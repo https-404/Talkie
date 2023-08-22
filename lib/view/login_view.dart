@@ -251,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
          width: _deviceWidth,
          alignment: Alignment.center,
          child: Text(
-           "Don't have an account? Register",
+           "Register here!",
            style: TextStyle(
              color: Colors.lightBlueAccent,
              fontSize: 16,
