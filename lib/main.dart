@@ -8,6 +8,7 @@ import 'package:talkie/view/login_view.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:talkie/view/registration_view.dart';
 import 'firebase_options.dart';
+import 'package:talkie/services/db_service.dart';
 // void main() {
 //   runApp(const MyApp());
 // }
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+   
     return MaterialApp(
       title: 'Talkie',
       theme: AppTheme.theme,

@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:talkie/services/navigation_service.dart';
+import 'package:talkie/services/media_service.dart';
 
 class RegistrationView extends StatefulWidget {
   @override
@@ -17,6 +20,8 @@ class _RegistrationView extends State<RegistrationView> {
   String? _name;
   String? _email;
   String? _password;
+
+  File? _image;
 
   GlobalKey<FormState>? _formkey;
 
@@ -45,34 +50,31 @@ class _RegistrationView extends State<RegistrationView> {
       //  color: Colors.red,
       height: _deviceHeight! * 0.78,
       padding: EdgeInsets.symmetric(horizontal: _deviceWidth! * 0.10),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _headingPage(),
-            _inputForm(),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _headingPage(),
+          _inputForm(),
+        ],
       ),
     );
   }
 
   Widget _backButtonAppbar() {
-    return  Container(
+    return Container(
       //padding: EdgeInsets.symmetric(horizontal: _deviceWidth! * 0.1, ),
-        child: IconButton(
-          onPressed: () {
-            NavigationService.instance.goBack();
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).colorScheme.primary,
-            size: 30,
-          ),
+      child: IconButton(
+        onPressed: () {
+          NavigationService.instance.goBack();
+        },
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.primary,
+          size: 30,
         ),
-
+      ),
     );
   }
 
@@ -134,10 +136,51 @@ class _RegistrationView extends State<RegistrationView> {
   Widget _imageSelectorWidget() {
     return Align(
       alignment: Alignment.center,
-      child: CircleAvatar(
-        radius: 40,
-        backgroundImage: NetworkImage(
-            "https://cdn0.iconfinder.com/data/icons/occupation-002/64/programmer-programming-occupation-avatar-512.png"),
+      child: GestureDetector(
+        onTap: () async {
+          XFile? _imageFile =
+              await MediaService.instance.getImageFromLibrary() ;
+          
+          setState(() {
+            _image = File(_imageFile!.path);
+          });
+        },
+        child:
+            // Container(
+            //   height: _deviceHeight! * 0.15,
+            //   width:  _deviceWidth! * 0.15,
+            //   child: CircleAvatar(
+            //
+            //     backgroundImage: NetworkImage(
+            //         "https://cdn0.iconfinder.com/data/icons/occupation-002/64/programmer-programming-occupation-avatar-512.png"),
+            //   ),
+            // ),
+            Container(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(100)),
+              child: Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          height: _deviceHeight! * 0.12,
+          width: _deviceWidth! * 0.25,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: _image != null
+                  ? FileImage(_image!) as ImageProvider
+                  : const NetworkImage(
+                      "https://cdn0.iconfinder.com/data/icons/occupation-002/64/programmer-programming-occupation-avatar-512.png"),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -150,7 +193,9 @@ class _RegistrationView extends State<RegistrationView> {
           return _input!.isNotEmpty ? null : "Please enter valid name";
         },
         onSaved: (_input) {
-          setState(() {});
+          setState(() {
+            _input = _name;
+          });
         },
         cursorColor: Theme.of(context).colorScheme.primary,
         decoration: InputDecoration(
@@ -178,7 +223,9 @@ class _RegistrationView extends State<RegistrationView> {
               : "Please enter valid email";
         },
         onSaved: (_input) {
-          setState(() {});
+          setState(() {
+            _input = _email;
+          });
         },
         cursorColor: Theme.of(context).colorScheme.primary,
         decoration: InputDecoration(
@@ -205,7 +252,9 @@ class _RegistrationView extends State<RegistrationView> {
           return _input!.isNotEmpty ? null : "Please enter valid name";
         },
         onSaved: (_input) {
-          setState(() {});
+          setState(() {
+            _input = _password;
+          });
         },
         cursorColor: Theme.of(context).colorScheme.primary,
         decoration: InputDecoration(
