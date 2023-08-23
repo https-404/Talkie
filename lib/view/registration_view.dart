@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talkie/services/navigation_service.dart';
 
 class RegistrationView extends StatefulWidget {
   @override
@@ -59,15 +60,19 @@ class _RegistrationView extends State<RegistrationView> {
   }
 
   Widget _backButtonAppbar() {
-    return Container(
-      child: IconButton(
-        onPressed: () {},
-        icon: Icon(
-          Icons.arrow_back,
-          color: Theme.of(context).colorScheme.primary,
-          size: 30,
+    return  Container(
+      //padding: EdgeInsets.symmetric(horizontal: _deviceWidth! * 0.1, ),
+        child: IconButton(
+          onPressed: () {
+            NavigationService.instance.goBack();
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.primary,
+            size: 30,
+          ),
         ),
-      ),
+
     );
   }
 
