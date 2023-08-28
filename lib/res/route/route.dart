@@ -31,6 +31,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:talkie/view/homepage_view.dart';
 import 'package:talkie/view/login_view.dart';
 import 'package:talkie/view/registration_view.dart';
 import 'route_name.dart';
@@ -39,5 +40,6 @@ import 'route_name.dart';
  final Map<String, WidgetBuilder> routes = {
     RouteName.login: (BuildContext context) => LoginPage(),
     RouteName.registration: (BuildContext context) => RegistrationView(),
+   RouteName.homepage: (BuildContext context) => Homepage(),
   };
 

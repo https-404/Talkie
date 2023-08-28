@@ -14,9 +14,11 @@ class CloudStorageService {
     _reference= _storage?.ref();
 
   }
+  TaskSnapshot? taskSnapshot;
   Future<UploadTask?> uploadUserImage (String _uid, File _image) async {
     try {
        return  _reference?.child( _profileImage).child(_uid).putFile(_image);
+       //taskSnapshot = await UploadTask.when
     }
     catch(e)
     {

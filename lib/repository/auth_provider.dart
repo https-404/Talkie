@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:talkie/res/route/route_name.dart';
 import 'package:talkie/services/navigation_service.dart';
 import 'package:talkie/services/snackbar_service.dart';
 
@@ -34,7 +35,9 @@ class AuthProvider extends ChangeNotifier {
       //navigate to homepage
       SnackbarService.instance.showSnackbarSuccess("Welcome! ${user?.email}");
       // print("Logged in successfully");
+      NavigationService.instance.navigateToReplacemnt(RouteName.homepage);
     } catch (e) {
+      user = null;
       SnackbarService.instance.showSnackbarError("Error Logging in!");
       status = AuthStatus.error;
     }
@@ -55,6 +58,7 @@ class AuthProvider extends ChangeNotifier {
           .showSnackbarSuccess("Registration Completed. Welcome ${_email}");
           //update last seen time
       NavigationService.instance.goBack();
+      NavigationService.instance.navigateToReplacemnt(RouteName.homepage);
       //navigate back to homepapge to login again after register
     } catch (e) {
       status = AuthStatus.error;
